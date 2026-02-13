@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine? 💕</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Playfair+Display:wght@400;600;700;900&family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --rose-petal: #FFE4E9;
+            --romantic-pink: #FFB6C6;
+            --deep-rose: #FF6B9D;
+            --valentine-red: #FF1744;
+            --soft-white: #FFF5F7;
+            --gold-shimmer: #FFD700;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, 
+                var(--rose-petal) 0%, 
+                var(--romantic-pink) 40%, 
+                var(--deep-rose) 100%);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Magical background effects */
+        .background-magic {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .floating-heart {
+            position: absolute;
+            font-size: clamp(15px, 3vw, 25px);
+            animation: floatUp 12s infinite ease-in-out;
+            opacity: 0;
+            filter: blur(0.5px);
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) rotate(0deg) scale(0.8);
+                opacity: 0;
+            }
+            15% {
+                opacity: 0.6;
+            }
+            85% {
+                opacity: 0.4;
+            }
+            100% {
+                transform: translateY(-10vh) rotate(360deg) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--gold-shimmer);
+            border-radius: 50%;
+            animation: sparkleAnim 3s infinite;
+            opacity: 0;
+            box-shadow: 0 0 8px var(--gold-shimmer);
+        }
+
+        @keyframes sparkleAnim {
+            0%, 100% { 
+                opacity: 0; 
+                transform: scale(0);
+            }
+            50% { 
+                opacity: 1; 
+                transform: scale(1.5);
+            }
+        }
+
+        /* Question Page Container */
+        .question-container {
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        /* Question Section - Fixed at Top */
+        .question-section {
+            text-align: center;
+            padding: 60px 20px 40px;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .heart-decoration {
+            font-size: clamp(40px, 8vw, 70px);
+            margin-bottom: 20px;
+            animation: heartPulse 2s infinite ease-in-out;
+            display: inline-block;
+        }
+
+        @keyframes heartPulse {
+            0%, 100% { 
+                transform: scale(1);
+            }
+            50% { 
+                transform: scale(1.15);
+            }
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(2.5rem, 7vw, 5rem);
+            color: var(--valentine-red);
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 
+                2px 2px 4px rgba(255, 255, 255, 0.8),
+                0 0 30px rgba(255, 23, 68, 0.3);
+            line-height: 1.3;
+            animation: gentleGlow 3s infinite alternate;
+        }
+
+        @keyframes gentleGlow {
+            from {
+                text-shadow: 
+                    2px 2px 4px rgba(255, 255, 255, 0.8),
+                    0 0 30px rgba(255, 23, 68, 0.3);
+            }
+            to {
+                text-shadow: 
+                    2px 2px 4px rgba(255, 255, 255, 0.9),
+                    0 0 40px rgba(255, 23, 68, 0.5);
+            }
+        }
+
+        .message-box {
+            min-height: 50px;
+            margin: 30px 0;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .message-box.visible {
+            opacity: 1;
+        }
+
+        .playful-message {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            color: var(--valentine-red);
+            font-weight: 700;
+            font-style: italic;
+            animation: fadeInMessage 0.5s ease-in-out;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px 30px;
+            border-radius: 20px;
+            box-shadow: 
+                0 8px 25px rgba(255, 23, 68, 0.3),
+                0 0 0 3px rgba(255, 107, 157, 0.2);
+            display: inline-block;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 23, 68, 0.3);
+        }
+
+        @keyframes fadeInMessage {
+            from {
+                opacity: 0;
+                transform: translateY(-20px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Button Container - Well Below Question */
+        .button-container {
+            margin-top: auto;
+            padding: 100px 20px 60px;
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            width: 100%;
+            position: relative;
+            min-height: 300px;
+        }
+
+        button {
+            font-family: 'Playfair Display', serif;
+            padding: 18px 50px;
+            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+            border: none;
+            border-radius: 60px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        #yesBtn {
+            background: linear-gradient(135deg, var(--valentine-red) 0%, var(--deep-rose) 100%);
+            color: white;
+            transform: scale(1);
+            z-index: 50;
+        }
+
+        #yesBtn:hover {
+            transform: scale(1.08);
+            box-shadow: 0 12px 35px rgba(255, 23, 68, 0.4);
+        }
+
+        #noBtn {
+            background: linear-gradient(135deg, var(--soft-white) 0%, var(--rose-petal) 100%);
+            color: var(--valentine-red);
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 100;
+        }
+
+        #noBtn.moving {
+            position: fixed;
+            z-index: 150;
+        }
+
+        #noBtn:hover {
+            background: linear-gradient(135deg, var(--rose-petal) 0%, var(--romantic-pink) 100%);
+            box-shadow: 0 12px 35px rgba(255, 182, 198, 0.5);
+        }
+
+        /* Answer Page - Full Romance */
+        .answer-page {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: 
+                radial-gradient(ellipse at top, rgba(255, 182, 198, 0.4), transparent),
+                radial-gradient(ellipse at bottom, rgba(255, 107, 157, 0.3), transparent),
+                linear-gradient(135deg, #FF6B9D 0%, #FFB6C6 50%, #FFE4E9 100%);
+            z-index: 1000;
+            animation: fadeInPage 1.5s ease;
+            overflow: hidden;
+        }
+
+        @keyframes fadeInPage {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .answer-content {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .answer-content h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 5vw, 3.5rem);
+            color: white;
+            font-weight: 700;
+            line-height: 1.6;
+            max-width: 900px;
+            text-shadow: 
+                0 0 20px rgba(255, 255, 255, 0.8),
+                0 0 40px rgba(255, 107, 157, 0.6),
+                2px 2px 4px rgba(0, 0, 0, 0.2);
+            animation: glowPulse 3s infinite alternate;
+            margin-bottom: 40px;
+            padding: 0 20px;
+        }
+
+    .romantic-photo {
+        margin: 30px 0;
+        animation: fadeInPhoto 2s ease 1s both;
+        width: 100%;
+        max-width: 400px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .romantic-photo img {
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+        object-position: center;
+        border-radius: 25px;
+        box-shadow: 
+            0 15px 50px rgba(0, 0, 0, 0.3),
+            0 0 30px rgba(255, 255, 255, 0.3);
+        border: 6px solid rgba(255, 255, 255, 0.9);
+        transition: transform 0.3s ease;
+        display: block;
+    }
+
+    .romantic-photo img:hover {
+        transform: scale(1.03);
+    }
+
+    @keyframes fadeInPhoto {
+        from {
+            opacity: 0;
+            transform: translateY(30px) scale(0.9);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+
+    /* Mobile responsive photo */
+    @media (max-width: 768px) {
+        .romantic-photo {
+            max-width: 90%;
+        }
+        
+        .romantic-photo img {
+            height: 220px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .romantic-photo img {
+            height: 180px;
+        }
+    }
+        @keyframes glowPulse {
+            from { 
+                text-shadow: 
+                    0 0 20px rgba(255, 255, 255, 0.8),
+                    0 0 40px rgba(255, 107, 157, 0.6),
+                    2px 2px 4px rgba(0, 0, 0, 0.2);
+            }
+            to { 
+                text-shadow: 
+                    0 0 30px rgba(255, 255, 255, 1),
+                    0 0 60px rgba(255, 107, 157, 0.9),
+                    2px 2px 4px rgba(0, 0, 0, 0.2);
+            }
+        }
+
+        .love-note {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(1.3rem, 3.5vw, 2rem);
+            color: var(--soft-white);
+            font-weight: 600;
+            margin-top: auto;
+            padding: 20px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+            animation: fadeInLate 2s ease 1.5s both;
+        }
+
+        @keyframes fadeInLate {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Floating hearts for answer page */
+        .love-heart {
+            position: absolute;
+            font-size: clamp(20px, 4vw, 35px);
+            animation: riseUp 5s infinite ease-out;
+            opacity: 0;
+            z-index: 5;
+        }
+
+        @keyframes riseUp {
+            0% {
+                transform: translateY(0) rotate(0deg) scale(0.5);
+                opacity: 0;
+            }
+            20% {
+                opacity: 0.8;
+            }
+            80% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-120vh) rotate(360deg) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .question-section {
+                padding: 40px 15px 30px;
+            }
+
+            .button-container {
+                padding: 80px 15px 50px;
+                gap: 25px;
+                min-height: 250px;
+            }
+
+            button {
+                padding: 15px 40px;
+            }
+
+            .message-box {
+                min-height: 40px;
+                margin: 20px 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .button-container {
+                padding: 60px 15px 40px;
+                min-height: 220px;
+            }
+
+            button {
+                padding: 12px 35px;
+            }
+        }
+
+        /* Loading animation */
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Magical Background -->
+    <div class="background-magic" id="backgroundMagic"></div>
+
+    <!-- Question Page -->
+    <div class="question-container" id="questionPage">
+        <div class="question-section">
+            <div class="heart-decoration">❤️ 💕 ❤️</div>
+            <h1>Will you be my Valentine?</h1>
+            <div class="message-box">
+                <p class="playful-message" id="playfulMessage"></p>
+            </div>
+        </div>
+
+        <div class="button-container" id="buttonContainer">
+            <button id="yesBtn">Yes 💖</button>
+            <button id="noBtn">No</button>
+        </div>
+    </div>
+
+    <!-- Answer Page -->
+    <div class="answer-page" id="answerPage">
+        <div class="answer-content">
+            <h1>
+                So this is where our forever begins 💞 💖<br>
+                Every laugh, every moment, every heartbeat…<br>
+                I want all of it with you.
+            </h1>
+            
+            <div class="romantic-photo">
+                <!-- Replace this URL with your own romantic photo -->
+                <img src="US.jpg" alt="Our Love" id="valentinePhoto">
+            </div>
+            
+            <p class="love-note">I love you more every single day and I promise to keep choosing you, again and again, every single day!! 💕 💖</p>
+        </div>
+    </div>
+
+    <script>
+        // Playful messages
+        const messages = [
+            "Think again 🥺",
+            "Are you sure? 💔",
+            "Really really sure? 😢",
+            "Last chance… 💞",
+            "Please reconsider 🥹",
+            "My heart is breaking 💔",
+            "But why not? 🌹",
+            "You're making this hard 😭",
+            "One more chance? 🙏",
+            "I believe in us 💗",
+            "Don't give up on love 💝",
+            "Pretty please? 🥺",
+            "You know you want to 😊",
+            "Just say yes already! 💕",
+            "Come on... 🥹",
+            "I'm not giving up! 💪",
+            "You're being stubborn 😤",
+            "This is torture 😩",
+            "My poor heart 💔",
+            "Give love a chance 🌹",
+            "You'll regret this 😢",
+            "I'll keep asking 💝",
+            "Please, please, please? 🙏",
+            "Don't be like that 🥺",
+            "You're killing me 😭",
+            "Have mercy! 💕",
+            "Be mine? 💖",
+            "Say yes, say yes! 🎉",
+            "Why are you doing this? 😢",
+            "I promise I'm worth it 💗"
+        ];
+
+        let noClickCount = 0;
+        let yesScale = 1;
+        let isNoMoving = false;
+
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const playfulMessage = document.getElementById('playfulMessage');
+        const messageBox = document.querySelector('.message-box');
+        const questionPage = document.getElementById('questionPage');
+        const answerPage = document.getElementById('answerPage');
+        const buttonContainer = document.getElementById('buttonContainer');
+
+        // Create magical background
+        function createMagicBackground() {
+            const magic = document.getElementById('backgroundMagic');
+            
+            // Create floating hearts
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                heart.innerHTML = ['❤️', '💕', '💖', '💗', '💝', '🌹'][Math.floor(Math.random() * 6)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 12 + 's';
+                heart.style.animationDuration = (10 + Math.random() * 8) + 's';
+                magic.appendChild(heart);
+            }
+
+            // Create sparkles
+            for (let i = 0; i < 30; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.left = Math.random() * 100 + '%';
+                sparkle.style.top = Math.random() * 100 + '%';
+                sparkle.style.animationDelay = Math.random() * 3 + 's';
+                sparkle.style.animationDuration = (2 + Math.random() * 2) + 's';
+                magic.appendChild(sparkle);
+            }
+        }
+
+        createMagicBackground();
+
+        // Initialize No button position
+        function initializeNoButton() {
+            noBtn.classList.add('moving');
+            const rect = noBtn.getBoundingClientRect();
+            noBtn.style.left = rect.left + 'px';
+            noBtn.style.top = rect.top + 'px';
+        }
+
+        // Move No button to random safe position
+        function moveNoButton() {
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
+            const btnWidth = noBtn.offsetWidth;
+            const btnHeight = noBtn.offsetHeight;
+
+            // Safe margins from edges
+            const margin = 20;
+            const maxX = windowWidth - btnWidth - margin;
+            const maxY = windowHeight - btnHeight - margin;
+
+            // Random position within safe bounds
+            const randomX = margin + Math.random() * (maxX - margin);
+            const randomY = margin + Math.random() * (maxY - margin);
+
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+        }
+
+        // No button click handler
+        noBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Show message box on first click
+            if (noClickCount === 0) {
+                messageBox.classList.add('visible');
+            }
+            
+            // Show message
+            if (noClickCount < messages.length) {
+                playfulMessage.textContent = messages[noClickCount];
+            } else {
+                playfulMessage.textContent = messages[Math.floor(Math.random() * messages.length)];
+            }
+
+            noClickCount++;
+            
+            // Grow Yes button progressively (even faster growth)
+            yesScale += 0.5;
+            yesBtn.style.transform = `scale(${yesScale})`;
+
+            // Shrink No button
+            const noScale = Math.max(0.6, 1 - (noClickCount * 0.08));
+            noBtn.style.transform = `scale(${noScale})`;
+
+            // Move No button after first click
+            if (!isNoMoving) {
+                isNoMoving = true;
+                initializeNoButton();
+            }
+            
+            moveNoButton();
+        });
+
+        // Yes button click handler
+        yesBtn.addEventListener('click', function() {
+            questionPage.style.display = 'none';
+            answerPage.style.display = 'block';
+
+            // Create rising hearts
+            const heartInterval = setInterval(function() {
+                const heart = document.createElement('div');
+                heart.className = 'love-heart';
+                heart.innerHTML = ['❤️', '💕', '💖', '💗', '💝'][Math.floor(Math.random() * 5)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.bottom = '0';
+                heart.style.animationDelay = (Math.random() * 2) + 's';
+                heart.style.animationDuration = (4 + Math.random() * 3) + 's';
+                answerPage.appendChild(heart);
+
+                setTimeout(() => heart.remove(), 8000);
+            }, 400);
+
+            // Stop creating hearts after 20 seconds
+            setTimeout(() => clearInterval(heartInterval), 20000);
+        });
+
+        // Handle window resize
+        let resizeTimer;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(function() {
+                if (isNoMoving) {
+                    initializeNoButton();
+                }
+            }, 250);
+        });
+    </script>
+</body>
+</html>
